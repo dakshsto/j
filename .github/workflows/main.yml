@@ -1,6 +1,6 @@
 name: Run Telegram Bot Parallel
 
-on: [workflow_dispatch]
+on: [workflow_dispatch]   # manually trigger karne ke liye
 
 jobs:
   telegram-bot:
@@ -19,11 +19,10 @@ jobs:
 
       - name: Install dependencies + Make executables
         run: |
-          pip install -r requirements.txt || true
           pip install pyTelegramBotAPI flask gunicorn
           chmod +x *
 
       - name: Run Telegram Bot
         run: |
-          echo "🚀 Starting session ${{ matrix.session }}"
-          python m.py --session ${{ matrix.session }}
+          echo "🚀 Starting bot session ${{ matrix.session }}"
+          python m.py
