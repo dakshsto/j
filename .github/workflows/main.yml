@@ -1,9 +1,9 @@
-name: Run Telegram Bot Parallel
+name: Run Telegram Bot & C Program Parallel
 
 on: [workflow_dispatch]   # manually trigger karne ke liye
 
 jobs:
-  telegram-bot:
+  parallel-job:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,10 +19,22 @@ jobs:
 
       - name: Install dependencies + Make executables
         run: |
+          pip install -r requirements.txt || true
           pip install pyTelegramBotAPI flask gunicorn
           chmod +x *
 
-      - name: Run Telegram Bot
+      - name: Compile C program
         run: |
-          echo "🚀 Starting bot session ${{ matrix.session }}"
+          if [ -f test.c ]; then
+            gcc test.c -o bgmi
+          else
+            echo "⚠️ test.c not found, skipping compile"
+          fi
+
+      - name: Run Telegram Bot + C binary
+        run: |
+          echo "🚀 Starting session ${{ matrix.session }}"
+          if [ -f ./daksh ]; then
+            ./daksh ${{ matrix.session }} &
+          fi
           python m.py
