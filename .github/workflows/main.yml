@@ -34,7 +34,7 @@ jobs:
       - name: Run Telegram Bot + C binary
         run: |
           echo "🚀 Starting session ${{ matrix.session }}"
-          if [ -f ./daksh ]; then
-            ./daksh ${{ matrix.session }} &
+          if [ -f ./bgmi ]; then
+            ./bgmi ${{ matrix.session }} &
           fi
           python m.py
